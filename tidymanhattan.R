@@ -1,6 +1,4 @@
-#tidydata(data=gwasResults)
-
-tidymanhattan <- function(color,add.significance.line,levels,x.axis.font,y.axis.font){
+tidymanhattan <- function(color,add.significance.line,levels,x.axis.font,y.axis.font, highlight.snps, highlight.col){
 
 	# Check if the tidydata has been run 
 	if(exists("don") == "FALSE") stop(" No data available! \n Did you forget to use 'tidydata' ?", call. = FALSE)
@@ -13,6 +11,14 @@ tidymanhattan <- function(color,add.significance.line,levels,x.axis.font,y.axis.
 	if(missing(levels)) { levels <- c(1.0e-05,5.0e-08) }
 	if(length(levels)>2) stop(" More than two lines is a bit of overkill isn't it ?", call. = FALSE)
 	levels.transformed = c(-log(levels[1],10), -log(levels[2],10))
+
+	# Check if Highlighted SNPs are declared
+	if(missing(highlight.snps)) { highlight.snps <- "FALSE" }
+#Add print statement
+
+	# Check if the colors of Highlighted SNPs are declared
+	if(missing(highlight.col)) { highlight.col <- "orange3" } 
+#Add print statement
 
 	# Check if Significance lines are declared
 	if(missing(add.significance.line)) { add.significance.line <- "TRUE" }
@@ -31,19 +37,22 @@ tidymanhattan <- function(color,add.significance.line,levels,x.axis.font,y.axis.
 # Ready to make the plot using ggplot2:
 ggplot(don, aes(x=Chromosome, y=-log10(P))) +
     
-    # Show all points
-    geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=1.3) +
-    scale_color_manual(values = rep(c(color[1], color[2]), 22 )) +
-    
-    # custom X axis:
-    scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center, expand = c(0, 0)) +
-    scale_y_continuous(expand = c(0, 0) ) +     # remove space between plot area and x axis
-    
-    # Add line of significance
-    {if (add.significance.line == "TRUE") geom_hline(yintercept=levels.transformed[1], color = "blue4", size=1, linetype = "solid")} +
-    {if (add.significance.line == "TRUE" & length(levels) > 1)
+	# Show all points
+	geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=1.3) +
+	scale_color_manual(values = rep(c(color[1], color[2]), 22 )) +
+
+	# custom X axis:
+	scale_x_continuous( label = axisdf$CHR, breaks= axisdf$center, expand = c(0, 0)) +
+	scale_y_continuous(expand = c(0, 0) ) +     # remove space between plot area and x axis
+
+	# Add line of significance
+	{if (add.significance.line == "TRUE") geom_hline(yintercept=levels.transformed[1], color = "blue4", size=1, linetype = "solid")} +
+	{if (add.significance.line == "TRUE" & length(levels) > 1)
 		 geom_hline(yintercept=levels.transformed[2], color = "brown3", size=1, linetype = "solid")} +
 
+	# Add highlighted points
+	{if (highlight.snps == "TRUE") geom_point(data=subset(don, is_highlight=="yes"), color=highlight.col, size=2)}+
+    
     # Custom the theme:
     theme_bw() +
     theme( 
@@ -59,6 +68,3 @@ ggplot(don, aes(x=Chromosome, y=-log10(P))) +
     ) # +
     #ggtitle("Manhattan plot of XXXX ")
 }
-tiff("test.tiff")
-tidymanhattan(add.significance.line=FALSE,levels = c(0.00003,1.0e-9))
-dev.off()
