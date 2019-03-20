@@ -1,7 +1,14 @@
-tidymanhattan <- function(color,add.significance.line,levels,x.axis.font,y.axis.font, highlight.snps, highlight.col){
+tidymanhattan <- function(data, color, add.significance.line, levels, x.axis.font, y.axis.font,
+				highlight.snps, highlight.col, title, x.axis.title.font, y.axis.title.font,
+				plot.title.font){
 
 	# Check if the tidydata has been run 
-	if(exists("don") == "FALSE") stop(" No data available! \n Did you forget to use 'tidydata' ?", call. = FALSE)
+	if(missing(data)) stop(" No data available! 
+		\n Did you just forget to use 'tidydata' ? Oh God! ", call. = FALSE)
+	# Check if the declared data has proper dimension
+	if(is.null(dim(data)) == "TRUE") stop(" No data available! 
+		\n Why on earth did you declare a data with no dimension ? 
+		\n That's it. I'm out!", call. = FALSE)
 
 	# Check if the colors has been declared
 	if(missing(color)) { color <- c("dodgerblue", "dodgerblue4") }  
@@ -14,28 +21,48 @@ tidymanhattan <- function(color,add.significance.line,levels,x.axis.font,y.axis.
 
 	# Check if Highlighted SNPs are declared
 	if(missing(highlight.snps)) { highlight.snps <- "FALSE" }
-#Add print statement
 
 	# Check if the colors of Highlighted SNPs are declared
-	if(missing(highlight.col)) { highlight.col <- "orange3" } 
-#Add print statement
+	if(highlight.snps == "TRUE" & missing(highlight.col)) { highlight.col <- "orange3" } 
+	print("Pandejo... Why U No choose color for highlighting SNP ? Lucky for you, I'm choosing Orange")
 
 	# Check if Significance lines are declared
 	if(missing(add.significance.line)) { add.significance.line <- "TRUE" }
 	if(add.significance.line == "TRUE") { if (length(levels) > 1) { 
 		print(paste0("Line of significance drawn at ", levels[1], " and ", levels[2])) 
-		} else { print(paste0("Line of significance drawn at ", levels[1])) }}
+		} else { print(paste0("Line of significance undeclared! Default drawn at ", levels[1])) }}
 
 	# Check if X-axis fonts are declared
 	if(missing(x.axis.font)) {x.axis.font = 14}
-	print("X-axis title font set at 14")
+	print(paste0("X-axis text font set at ",x.axis.font))
 
 	# Check if Y-axis fonts are declared
 	if(missing(y.axis.font)) {y.axis.font = 14}
-	print("Y-axis title font set at 14")
+	print(paste0("Y-axis text font set at ",y.axis.font))
+
+	# Check if X axis title font are declared
+	if(missing(x.axis.title.font)) {x.axis.title.font = 20}
+	print(paste0("X axis title font set at ",x.axis.title.font))
+
+	# Check if Y axis title font are declared
+	if(missing(y.axis.title.font)) {y.axis.title.font = 20}
+	print(paste0("Y axis title font set at ",y.axis.title.font))
+
+	# Check if plot.title.font fonts are declared
+	if(!missing(title) & missing(plot.title.font)) {plot.title.font = 40;
+	print(paste0("Main title font set at ",plot.title.font))}
+	if(missing(title) & missing(plot.title.font)) {plot.title.font = 40}
+
+	# Then we need to prepare the X axis. 
+	# Indeed we do not want to display the cumulative position of SNP in bp, but just show the chromosome name instead.
+
+	axisdf <- data %>% group_by(CHR) %>% summarize(center=( max(Chromosome) + min(Chromosome) ) / 2 )
+#####CHANGE THIS######
+art<-readLines(paste(getwd(),"/data/Dilbert.txt",sep=""))
+cat(art, sep = "\n")
 
 # Ready to make the plot using ggplot2:
-ggplot(don, aes(x=Chromosome, y=-log10(P))) +
+ggplot(data, aes(x=Chromosome, y=-log10(P))) +
     
 	# Show all points
 	geom_point( aes(color=as.factor(CHR)), alpha=0.8, size=1.3) +
@@ -51,7 +78,7 @@ ggplot(don, aes(x=Chromosome, y=-log10(P))) +
 		 geom_hline(yintercept=levels.transformed[2], color = "brown3", size=1, linetype = "solid")} +
 
 	# Add highlighted points
-	{if (highlight.snps == "TRUE") geom_point(data=subset(don, is_highlight=="yes"), color=highlight.col, size=2)}+
+	{if (highlight.snps == "TRUE") geom_point(data=subset(data, is_highlight=="yes"), color=highlight.col, size=2)}+
     
     # Custom the theme:
     theme_bw() +
@@ -62,9 +89,9 @@ ggplot(don, aes(x=Chromosome, y=-log10(P))) +
       panel.border = element_blank(),
       panel.grid.major.x = element_blank(),
       panel.grid.minor.x = element_blank(),
-      # plot.title = element_text(size = 50),  
-      axis.title.x = element_text(size = 20),  
-      axis.title.y = element_text(size = 20)
-    ) # +
-    #ggtitle("Manhattan plot of XXXX ")
+      plot.title = element_text(size = plot.title.font),  
+      axis.title.x = element_text(size = x.axis.title.font),  
+      axis.title.y = element_text(size = x.axis.title.font)
+    ) +
+    {if (!missing(title)) ggtitle(title)}
 }
