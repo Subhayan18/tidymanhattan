@@ -58,19 +58,7 @@ A sample data is provided with the package that can be found under the name `SNP
 require(tidyverse)
 require(ggrepel)
 # Load the package and example data given with the package
-require(tidymanhattan)
-```
-
-```
-## Loading required package: tidymanhattan
-```
-
-```
-## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-## logical.return = TRUE, : there is no package called 'tidymanhattan'
-```
-
-```r
+# require(tidymanhattan)
 data("gwasResults")
 ```
 
