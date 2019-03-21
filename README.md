@@ -103,17 +103,19 @@ Now we will change the other plot parameters to further customize the plot. Our 
 
 `Plot title size` = 25
 
+`Axes color` = 'gray90'
+
 
 ```r
 tidymanhattan(test,add.significance.line = TRUE, levels = 1.0e-07, x.axis.font = 12, y.axis.font = 12, 
-title = "Custom Manhattan", x.axis.title.font = 18, y.axis.title.font = 18, plot.title.font= 25)
+title = "Custom Manhattan", x.axis.title.font = 18, y.axis.title.font = 18, plot.title.font= 25, axes.color = 'gray90')
 ```
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 #### Example 4
 
-Now we will high light out choice of SNPs. A list of SNPs are provided with the package that can be found under `\data\SNPsOfInterest`
+Now we will high light out choice of SNPs. A list of SNPs are provided with the package that can be found under the name `SNPsOfInterest`
 
 
 ```r
