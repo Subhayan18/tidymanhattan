@@ -59,14 +59,7 @@ require(tidyverse)
 require(ggrepel)
 # Load the package and example data given with the package
 # require(tidymanhattan)
-data("gwasResults")
-```
-
-```
-## Warning in data("gwasResults"): data set 'gwasResults' not found
-```
-
-```r
+# data("gwasResults")
 # tidy up the GWAS summary statistics that will build the plot structure
 test<-tidydata(gwasResults)
 ```
