@@ -1,4 +1,11 @@
-# tidymanhattan
+---
+title: "tidymanhattan"
+output: 
+  html_document:
+    includes:
+      after_body: footer.html
+---
+<br><br>
 Tidyverse supported R package for GWAS data visualization
 
 **package is under development**
@@ -46,18 +53,38 @@ Base pair : **BP**
 
 P value : **P**
 
-A sample data is provided with the package that can be found under `\data\gwasResults`
+A sample data is provided with the package that can be found under the name `gwasResults`
 
 SNPs that need to be highlighted, should be provided in a list separated by *space* or *tab* without any header or any other formatting.
 
-A sample data is provided with the package that can be found under `\data\SNPsOfInterest`
+A sample data is provided with the package that can be found under the name `SNPsOfInterest`
 
 
 ```r
 require(tidyverse)
 require(ggrepel)
-# Load the example data given with the package
-# load(file=paste(find.package('tidymanhattan'),"/data/gwasResults.rda",sep=""))
+# Load the package and example data given with the package
+require(tidymanhattan)
+```
+
+```
+## Loading required package: tidymanhattan
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'tidymanhattan'
+```
+
+```r
+data("gwasResults")
+```
+
+```
+## Warning in data("gwasResults"): data set 'gwasResults' not found
+```
+
+```r
 # tidy up the GWAS summary statistics that will build the plot structure
 test<-tidydata(gwasResults)
 ```
@@ -115,7 +142,11 @@ Now we will high light out choice of SNPs. A list of SNPs are provided with the 
 
 
 ```r
-#load(file=paste(find.package('tidymanhattan'),"/data/SNPsOfInterest.rda",sep=""))
+data("SNPsOfInterest")
+```
+
+```
+## Warning in data("SNPsOfInterest"): data set 'SNPsOfInterest' not found
 ```
 Now we get all the SNPs that fall within a 600kb window `default is 500kb` of any of the SNPs loaded from `SNPsOfInterest`
 
@@ -141,5 +172,4 @@ tidymanhattan(test,highlight.snps=TRUE,highlight.col = "firebrick1")
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
 
-More features will be added gradually. If you have feature that you'd like to see incorporated in `tidymanhattan`, please send 
-a request @ **mailmesubhayan(at)gmail(dot)com**
+More features will be added gradually. If you have feature that you'd like to see incorporated in `tidymanhattan`
