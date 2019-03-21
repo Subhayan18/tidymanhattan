@@ -1,6 +1,6 @@
 tidymanhattan <- function(data, color, add.significance.line, levels, x.axis.font, y.axis.font,
 				highlight.snps, highlight.col, title, x.axis.title.font, y.axis.title.font,
-				plot.title.font){
+				axes.color, plot.title.font){
 
 	# Check if the tidydata has been run 
 	if(missing(data)) stop(" No data available! 
@@ -23,8 +23,14 @@ tidymanhattan <- function(data, color, add.significance.line, levels, x.axis.fon
 	if(missing(highlight.snps)) { highlight.snps <- "FALSE" }
 
 	# Check if the colors of Highlighted SNPs are declared
-	if(highlight.snps == "TRUE" & missing(highlight.col)) { highlight.col <- "orange3" } 
-	print("Pandejo... Why U No choose color for highlighting SNP ? Lucky for you, I'm choosing Orange")
+	if(highlight.snps == "TRUE" & missing(highlight.col)) { highlight.col <- "orange3" ; 
+	print("No choose color for highlighting SNP ? Lucky for you, I'm choosing Orange") }
+	if(highlight.snps == "TRUE" & !missing(highlight.col)) {
+	print(paste0("Color of highlighted SNPs has been chosen as ", highlight.col)) }
+
+	# Check if the axes colors of Highlighted SNPs are declared
+	if(missing(axes.color)) { axes.color <- "gray60" } 
+	print(paste0("Axes color has been chosen as ", axes.color))
 
 	# Check if Significance lines are declared
 	if(missing(add.significance.line)) { add.significance.line <- "TRUE" }
@@ -88,7 +94,8 @@ ggplot(data, aes(x=Chromosome, y=-log10(P))) +
       panel.grid.minor.x = element_blank(),
       plot.title = element_text(size = plot.title.font),  
       axis.title.x = element_text(size = x.axis.title.font),  
-      axis.title.y = element_text(size = x.axis.title.font)
+      axis.title.y = element_text(size = x.axis.title.font),
+	axis.line = element_line(colour = axes.color,size = 1, linetype = "solid")
     ) +
     {if (!missing(title)) ggtitle(title)}
 }

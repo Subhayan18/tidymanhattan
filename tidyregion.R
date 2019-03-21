@@ -7,7 +7,7 @@ tidyregion <- function(data, top_signal,window){
 	if(missing(top_signal)) stop(" No top_signal is declared. Are you out of SNPs ?", call. = FALSE)
 
 	# Check if window is decalred
-	if(missing(window)) { window = 500000 }
+	if(missing(window)) { window = 1000000 }
 
 signal_coord <- data[,c('CHR','BP','SNP')] %>%
 	filter(SNP %in% top_signal) %>%
