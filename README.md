@@ -3,7 +3,9 @@ Tidyverse supported R package for GWAS data visualization
 
 **package is under development**
 
-Idea here is to create functions that generates customizable plots for visualizing GWAS data
+Idea here is to create functions that generates customizable plots for visualizing GWAS data faster than other packages currently available.
+And while we are at it, also include customization parameters that can be more easily handled.  
+Much of this work is a development over work already done by Holtz Yan (https://github.com/holtzy/) which can be found at https://www.r-graph-gallery.com/wp-content/uploads/2018/02/Manhattan_plot_in_R.html 
 
 ### Included functions:
 
