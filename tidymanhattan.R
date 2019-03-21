@@ -57,9 +57,6 @@ tidymanhattan <- function(data, color, add.significance.line, levels, x.axis.fon
 	# Indeed we do not want to display the cumulative position of SNP in bp, but just show the chromosome name instead.
 
 	axisdf <- data %>% group_by(CHR) %>% summarize(center=( max(Chromosome) + min(Chromosome) ) / 2 )
-#####CHANGE THIS######
-art<-readLines(paste(getwd(),"/data/Dilbert.txt",sep=""))
-cat(art, sep = "\n")
 
 # Ready to make the plot using ggplot2:
 ggplot(data, aes(x=Chromosome, y=-log10(P))) +
