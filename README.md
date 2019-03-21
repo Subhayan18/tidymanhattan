@@ -125,10 +125,10 @@ data("SNPsOfInterest")
 ```
 ## Warning in data("SNPsOfInterest"): data set 'SNPsOfInterest' not found
 ```
-Now we get all the SNPs that fall within a 600kb window `default is 500kb` of any of the SNPs loaded from `SNPsOfInterest`
+Now we get all the SNPs that fall within a 1.2Mb window `default is 1Mb` of any of the SNPs loaded from `SNPsOfInterest`
 
 ```r
-SNPs<-tidyregion(data=gwasResults,top_signal=SNPsOfInterest, window=600000 )
+SNPs<-tidyregion(data=gwasResults,top_signal=SNPsOfInterest, window=1200000 )
 ```
 These SNPs need to be highlighted in the plot. For that we'll need to reformat the `test` data accordingly.
 
