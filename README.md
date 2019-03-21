@@ -1,10 +1,4 @@
----
-title: "tidymanhattan"
-output: 
-  html_document:
-    includes:
-      after_body: footer.html
----
+# tidymanhattan
 <br><br>
 Tidyverse supported R package for GWAS data visualization
 
@@ -171,5 +165,4 @@ tidymanhattan(test,highlight.snps=TRUE,highlight.col = "firebrick1")
 
 ![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
-
-More features will be added gradually. If you have feature that you'd like to see incorporated in `tidymanhattan`
+More features will be added gradually. If you have feature that you'd like to see incorporated in `tidymanhattan` please send a request.
